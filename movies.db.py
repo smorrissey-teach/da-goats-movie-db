@@ -68,5 +68,3 @@ with open('data/movies.csv', newline='', encoding='utf-8-sig') as file:
     cursor.executemany('INSERT INTO Movies (movie_id,Name,Genre) VALUES (?,?,?)', contents)
 
 conn.commit()
-
-cursor.execute('''create table if not exists genre(genre_id INTEGER,genre_name TEXT);''')
