@@ -13,12 +13,13 @@ for row in result:
     for genre in genres_list:
         print(genre)
         cursor.execute('''INSERT OR IGNORE INTO genre (genre_name) VALUES (?)''', (genre,))
-        cursor.execute(f'''SELECT genre_id FROM genre WHERE genre_name= "{genre}" ''', (genre,))
+        cursor.execute(f'''SELECT genre_id FROM genre WHERE genre_name= "{genre}" ''')
         result = cursor.fetchone()
-        print(result)
+        print(result[0])
+        cursor.execute('''INSERT OR IGNORE INTO movie_genre (movie_id, genre_id) VALUES (?, ?)''', (movie_id,result[0] ))
 
 
-#cursor.execute('''DROP TABLE genre''')
+
 conn.commit()
 cursor.execute('''create table if not exists genre(genre_id INTEGER,genre_name TEXT unique);''')
 
