@@ -39,8 +39,10 @@ cursor.execute('''create table if not exists Users(
             Email TEXT,
             Age TEXT);''')
 
+cursor.execute('''drop table movie_reviews''')
 cursor.execute('''create table if not exists Movie_Reviews(
             review_id INTEGER PRIMARY KEY,
+            user_id INTEGER,
             movie_id INTEGER,
             Rates TEXT,
             Description TEXT);''')
@@ -61,10 +63,18 @@ cursor.execute('''create table if not exists Users_Reviews(
 
 conn.commit()
 
-with open('data/movies.csv', newline='', encoding='utf-8-sig') as file:
+#with open('data/movies.csv', newline='', encoding='utf-8-sig') as file:
+  #  reader = csv.reader(file)
+    #next(reader)
+    #contents = ((int(row[0]), row[1], row[2]) for row in reader)
+    #cursor.executemany('INSERT INTO Movies (movie_id,Name,Genre) VALUES (?,?,?)', contents)
+
+conn.commit()
+
+with open('data/ratings.csv', newline='', encoding='utf-8-sig') as file:
     reader = csv.reader(file)
     next(reader)
     contents = ((int(row[0]), row[1], row[2]) for row in reader)
-    cursor.executemany('INSERT INTO Movies (movie_id,Name,Genre) VALUES (?,?,?)', contents)
+    cursor.executemany('INSERT INTO Movie_reviews (user_id,movie_id,rates) VALUES (?,?,?)', contents)
 
 conn.commit()
